@@ -59,12 +59,17 @@ async function designPrompt(input) {
 async function create(prompt, file_name) {
   console.log(Colors.Blue + "Generating image... ");
   // generate image
+  const image = await openai.images.generate({ model: "dall-e-3", prompt});
+
+  console.log(image.data);
 }
 
 function main() {
   rl.question("prompt: ", async (input) => {
     // design prompt
+    const { prompt, file_name } = await designPrompt(input);
     // create image
+    create(prompt, file_name);
     rl.close();
   });
 }
