@@ -62,6 +62,7 @@ async function create(prompt, file_name) {
   const image = await openai.images.generate({ model: "dall-e-3", prompt});
 
   console.log(image.data[0].url);
+  saveImage(image.data[0].url, file_name);
 }
 
 function main() {
