@@ -8,6 +8,10 @@
 - **openai**:   OpenAI API library for Node.js projects. This library provides convenient access to the OpenAI API from applications written in server-side JavaScript.
 
 ## Installation :
+
+[Node 19+](https://nodejs.org/en/download):
+`node -v`
+
 `npm install`
 
 ## [get an API key](https://platform.openai.com/account/api-keys)
