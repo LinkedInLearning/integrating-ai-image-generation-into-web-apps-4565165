@@ -65,7 +65,7 @@ async function create(prompt, file_name) {
   saveImage(image.data[0].url, file_name);
 }
 
-async function edit(prompt, file_name) {
+async function createEdit(prompt, file_name) {
   const image = await openai.images.edit({
     image: fs.createReadStream("assets/barrista/original.png"),
     mask: fs.createReadStream("assets/barrista/mask-hair.png"),
@@ -75,12 +75,22 @@ async function edit(prompt, file_name) {
   console.log(image.data);
 }
 
+async function createVariation(file_name) { 
+  const image = await openai.images.createVariation({
+    image: fs.createReadStream("assets/original.png"),
+    n: 3
+  });
+  saveImage(image.data[0].url, file_name);
+  console.log(image.data);
+}
+
 function main() {
   rl.question("prompt: ", async (input) => {
     // design prompt
-    const { prompt, file_name } = await designPrompt(input);
-    // edit image
-    edit(input, file_name);
+    // const { prompt, file_name } = await designPrompt(input);
+    // create variation
+    const file_name = input.split(/[ ,]+/).slice(0, 3).join("_");
+    createVariation(file_name);
     rl.close();
   });
 }
