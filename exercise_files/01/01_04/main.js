@@ -65,12 +65,22 @@ async function create(prompt, file_name) {
   saveImage(image.data[0].url, file_name);
 }
 
+async function edit(prompt, file_name) {
+  const image = await openai.images.edit({
+    image: fs.createReadStream("assets/barrista/original.png"),
+    mask: fs.createReadStream("assets/barrista/mask-hair.png"),
+    prompt,
+  });
+  saveImage(image.data[0].url, file_name);
+  console.log(image.data);
+}
+
 function main() {
   rl.question("prompt: ", async (input) => {
     // design prompt
     const { prompt, file_name } = await designPrompt(input);
-    // create image
-    create(prompt, file_name);
+    // edit image
+    edit(input, file_name);
     rl.close();
   });
 }
