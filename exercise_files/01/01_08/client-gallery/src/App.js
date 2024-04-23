@@ -6,7 +6,11 @@ import ImageGeneratorForm from "./components/ImageForm";
 function App() {
   const [data, setData] = useState([]);
   function fetchImages() {
-    // Define Request Here  
+    // Define Request Here
+    fetch("http://localhost:4000/")
+      .then((res) => res.json())
+      .then(data => data.images)
+      .then(setData)
   }
 
   useEffect(() => {
