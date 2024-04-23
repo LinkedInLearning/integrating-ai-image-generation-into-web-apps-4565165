@@ -16,6 +16,7 @@ function ImageGeneratorForm() {
 
     // Define POST Request Here 
     
+    
   };
 
   return (
