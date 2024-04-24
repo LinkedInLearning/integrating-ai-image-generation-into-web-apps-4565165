@@ -12,6 +12,7 @@ const openai = new OpenAI();
 const MODEL = "gpt-3.5-turbo";
 const INSTRUCTIONS =
   "You are an expert in prompt crafting. Use the text input to craft a detailed prompt for Image generation";
+
 const STABLE_DIFFUSION_MODEL =
   "stability-ai/stable-diffusion:ac732df83cea7fff18b8472768c88ad041fa750ff7682a21affe81863cbe77e4";
 const STABLE_DIFFUSION_IMG_2_IMG =
@@ -50,6 +51,15 @@ const replicateAPI = {
     try {
       console.log(Colors.Magenta + "Generating image ..." + Colors.Reset);
       // run the model 
+
+      const input = {
+        prompt,
+        scheduler: "K_EULER"
+      };
+    
+      const output = await replicate.run(STABLE_DIFFUSION_MODEL, { input });
+      callback(output[0])
+
     } catch (error) {
       console.error(Colors.Red + error);
     }
@@ -83,6 +93,14 @@ function main() {
     async (input) => {
       // ask the GPT model to generate a prompt
       const { prompt, file_name } = await designPrompt(input);
+      // generate the image
+
+      replicateAPI.txt_2_img(prompt, async (output) => { 
+        readFile(data => {
+          writeToFile(output, data)
+          saveImage(output, file_name + ".png")
+        })
+      })
       rl.close();
     }
   );
