@@ -65,6 +65,6 @@ export default {
     });
   },
   convert2Gif: (file_path) => {
-    exec("ffmpeg -i " + file_path + ".mp4 -qscale 0 " + file_path + ".gif");
+    exec("ffmpeg -i images/" + file_path + ".mp4 -qscale 0 images/" + file_path + ".gif");
   }
 };
