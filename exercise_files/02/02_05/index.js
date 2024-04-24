@@ -68,6 +68,13 @@ const replicateAPI = {
     try {
       console.log(Colors.Magenta + "Generating image ..." + Colors.Reset);
        // run the model 
+       const input = {
+        image: image_url,
+        num_inference_steps: 25
+    };
+    
+      const output = await replicate.run(STABLE_DIFFUSION_IMG_2_IMG, { input });
+      callback(output[0])
     } catch (error) {
       console.error(Colors.Red + error);
     }
@@ -89,16 +96,23 @@ function main() {
   console.log("==== *** IMAGE GENERATION with Stable Diffusion 🖼️ 🎨 *** ====");
   console.log("============================================================");
   rl.question(
-    Colors.Yellow + "\nGenerate an image from text: " + Colors.Reset,
+    Colors.Yellow + "\nGenerate an image from image: " + Colors.Reset,
     async (input) => {
       // ask the GPT model to generate a prompt
       const { prompt, file_name } = await designPrompt(input);
       // generate the image
 
-      replicateAPI.txt_2_img(prompt, async (output) => { 
+      // replicateAPI.txt_2_img(prompt, async (output) => { 
+      //   readFile(data => {
+      //     writeToFile(output, data)
+      //     saveImage(output, file_name + ".png")
+      //   })
+      // })
+
+      replicateAPI.img_2_img(input, async (output) => { 
         readFile(data => {
           writeToFile(output, data)
-          saveImage(output, file_name + ".png")
+          saveImage(output, new Date().getMilliseconds() + ".png")
         })
       })
       rl.close();
