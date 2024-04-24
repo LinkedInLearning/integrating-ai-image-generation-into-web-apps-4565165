@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import utils from "./utils.js";
 
 import { Colors } from "./utils.js";
-const { saveImage, writeToFile, readFile } = utils;
+const { saveImage, writeToFile, readFile, convert2Gif } = utils;
 dotenv.config();
 
 const openai = new OpenAI();
@@ -85,10 +85,11 @@ const replicateAPI = {
        // run the model 
        const input = {
         width: 768,
-        prompt: "a medium shot of a vibrant coral reef with a variety of marine life, rainbow, visual effects, prores, cineon, royal, monumental, hyperrealistic, exceptional, visually stunning",
+        prompt,
         negative_prompt: "",
         pan_right_motion_strength: 0.75
       };
+
       const output = await replicate.run(ANIMATE_DIFF_MODEL, { input });
       callback(output[0])
     } catch (error) {
@@ -104,7 +105,7 @@ function main() {
   console.log("==== *** IMAGE GENERATION with Stable Diffusion 🖼️ 🎨 *** ====");
   console.log("============================================================");
   rl.question(
-    Colors.Yellow + "\nGenerate an image from image: " + Colors.Reset,
+    Colors.Yellow + "\nGenerate an animation from text: " + Colors.Reset,
     async (input) => {
       // ask the GPT model to generate a prompt
       const { prompt, file_name } = await designPrompt(input);
@@ -124,12 +125,14 @@ function main() {
       //   })
       // })
 
-      replicateAPI.img_2_img(input, async (output) => { 
-        readFile(data => {
-          writeToFile(output, data)
-          saveImage(output, file_name + ".png")
-        })
+      replicateAPI.txt_2_animation(prompt, async (output) => { 
+          readFile(data => {
+            writeToFile(output, data)
+            saveImage(output, new Date().getMilliseconds() + ".mp4")
+            convert2Gif(new Date().getMilliseconds())
+          })
       })
+      
       rl.close();
     }
   );
