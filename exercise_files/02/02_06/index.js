@@ -82,15 +82,7 @@ const replicateAPI = {
   txt_2_animation: async (prompt, callback) => {
     try {
       console.log(Colors.Magenta + "Generating image ..." + Colors.Reset);
-       // run the model 
-       const input = {
-        width: 768,
-        prompt: "a medium shot of a vibrant coral reef with a variety of marine life, rainbow, visual effects, prores, cineon, royal, monumental, hyperrealistic, exceptional, visually stunning",
-        negative_prompt: "",
-        pan_right_motion_strength: 0.75
-      };
-      const output = await replicate.run(ANIMATE_DIFF_MODEL, { input });
-      callback(output[0])
+       // run the model
     } catch (error) {
       console.error(Colors.Red + error);
     }
@@ -123,13 +115,6 @@ function main() {
       //     saveImage(output, new Date().getMilliseconds() + ".png")
       //   })
       // })
-
-      replicateAPI.img_2_img(input, async (output) => { 
-        readFile(data => {
-          writeToFile(output, data)
-          saveImage(output, file_name + ".png")
-        })
-      })
       rl.close();
     }
   );
