@@ -13,7 +13,7 @@ const MODEL = "gpt-3.5-turbo";
 const INSTRUCTIONS =
   "You are an expert in prompt crafting. Use the text input to craft a detailed prompt for Image generation";
 const STABLE_DIFFUSION_MODEL =
-  "stability-ai/stable-diffusion:db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf";
+  "stability-ai/stable-diffusion:ac732df83cea7fff18b8472768c88ad041fa750ff7682a21affe81863cbe77e4";
 const STABLE_DIFFUSION_IMG_2_IMG =
   "stability-ai/stable-diffusion-img2img:15a3689ee13b0d2616e98820eca31d4c3abcd36672df6afce5cb6feb1d66087d";
 const ANIMATE_DIFF_MODEL =
