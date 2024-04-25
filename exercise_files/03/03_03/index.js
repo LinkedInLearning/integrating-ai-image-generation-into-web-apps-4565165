@@ -43,7 +43,7 @@ const txt_2_img = async (prompt, callback) => {
 };
 
 // create chain
-const chain = promptTemplate.pipe(model)
+const chain = promptTemplate.pipe(model).pipe(outputParser)
 
 // run the chain
 const response = await chain.invoke({ topic: "national park"})
