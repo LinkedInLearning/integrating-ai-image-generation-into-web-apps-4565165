@@ -42,14 +42,6 @@ const txt_2_img = async (prompt, callback) => {
   }
 };
 
-const saveCampaign = (data) => {
-  // save image and write to file
-};
-
-const success = () =>
-  console.log(Colors.Green + "🎉 Campaign created and saved!" + Colors.Reset);
-
-
 // create chain
 const chain = promptTemplate.pipe(model).pipe(outputParser)
 
