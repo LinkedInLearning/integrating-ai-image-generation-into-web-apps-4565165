@@ -37,7 +37,7 @@ curl http://127.0.0.1:4000/
 curl -X POST \
      -H "Content-Type: application/json" \
      -H "Authorization: Bearer $OPENAI_API_KEY" \
-     -d '{"input": "flower blue"}' \
+     -d '{"input": "people hanging out in a pub in a pub"}' \
      http://127.0.0.1:4000/create
 
 
