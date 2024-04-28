@@ -38,10 +38,7 @@ export const saveImage = async (imageUrl) => {
     .catch((error) => console.error("Error in saveImage function: ", error));
 };
 export const writeToFile = (text) => {
-  const wrappedText = (s) =>
-    text.replace(/(?![^\n]{1,32}$)([^\n]{1,32})\s/g, "$1\n");
-
-  fs.writeFile("campaigns/text.txt", wrappedText, (writeErr) => {
+  fs.writeFile("campaigns/text.txt", text, (writeErr) => {
     if (writeErr) {
       console.error("Error writing to the file:", writeErr);
     }

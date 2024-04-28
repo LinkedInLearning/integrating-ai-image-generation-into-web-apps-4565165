@@ -8,7 +8,7 @@ import { saveImage, writeToFile, Colors } from "./utils.js";
 dotenv.config();
 
 const model = new ChatOpenAI({});
-const replicate = new Replicate();
+const replicate = new Replicate({ auth: process.env.REPLICATE_API_TOKEN})
 const outputParser = new StringOutputParser();
 
 const INSTRUCTIONS =
@@ -22,7 +22,7 @@ const REPLICATE_STABLE_AI =
 const ANIMATE_DIFF_MODEL =
   "zsxkib/animate-diff:269a616c8b0c2bbc12fc15fd51bb202b11e94ff0f7786c026aa905305c4ed9fb";
 
-const txt_2_img = async (prompt, callback) => {
+const txt_2_img = async (prompt) => {
   try {
     console.log(Colors.Magenta + "Generating image ..." + Colors.Reset);
     const output = await replicate.run(REPLICATE_STABLE_AI, {
@@ -42,8 +42,18 @@ const txt_2_img = async (prompt, callback) => {
   }
 };
 
+const saveCampaign = (data) => {
+  saveImage(data.output[0]);
+  writeToFile(data.prompt);
+  // save image and write to file
+};
+
+const success = () =>
+  console.log(Colors.Green + "🎉 Campaign created and saved!" + Colors.Reset);
+
+
 // create chain
-const chain = promptTemplate.pipe(model).pipe(outputParser)
+const chain = promptTemplate.pipe(model).pipe(outputParser).pipe(txt_2_img).pipe(saveCampaign).pipe(success)
 
 // run the chain
 const response = await chain.invoke({ topic: "national park"})
